@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { fetchNotes } from '../../lib/api/notes';
+import { fetchNotes } from '../../lib/api';
 import NoteList from '../../components/NoteList/NoteList';
 import SearchBar from '../../components/SearchBox/SearchBox'; // Správný import
 import Pagination from '../../components/Pagination/Pagination';

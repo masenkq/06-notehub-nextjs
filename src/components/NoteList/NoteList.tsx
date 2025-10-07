@@ -1,16 +1,16 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Link from 'next/link';
-import { deleteNote } from '@/lib/api/api';
-import { Note } from '@/types/note';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteNote } from '../../lib/api/notes';
+import { Note } from '../../types/note';
 import css from './NoteList.module.css';
 
-interface NoteListProps {
+interface Props {
   notes: Note[];
 }
 
-export default function NoteList({ notes }: NoteListProps) {
+export default function NoteList({ notes }: Props) {
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({
@@ -20,32 +20,23 @@ export default function NoteList({ notes }: NoteListProps) {
     },
   });
 
-  const handleDelete = (id: string): void => {
-    if (window.confirm('Are you sure you want to delete this note?')) {
-      deleteMutation.mutate(id);
-    }
-  };
-
   return (
     <ul className={css.list}>
-      {notes.map((note: Note) => (
+      {notes.map((note) => (
         <li key={note.id} className={css.listItem}>
           <h2 className={css.title}>{note.title}</h2>
           <p className={css.content}>{note.content}</p>
           <div className={css.footer}>
             <span className={css.tag}>{note.tag}</span>
-            <div className={css.actions}>
-              <Link href={`/notes/${note.id}`} className={css.viewButton}>
-                View details
-              </Link>
-              <button 
-                className={css.button} 
-                onClick={() => handleDelete(note.id)}
-                disabled={deleteMutation.isPending}
-              >
-                {deleteMutation.isPending ? 'Deleting...' : 'Delete'}
-              </button>
-            </div>
+            <Link href={`/notes/${note.id}`} className={css.link}>
+              View details
+            </Link>
+            <button 
+              className={css.button}
+              onClick={() => deleteMutation.mutate(note.id)}
+            >
+              Delete
+            </button>
           </div>
         </li>
       ))}

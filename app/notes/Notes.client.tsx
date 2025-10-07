@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { fetchNotes } from '../../lib/api/notes';
 import NoteList from '../../components/NoteList/NoteList';
-import SearchBar from '../../components/SearchBar/SearchBar'; // Správný import
+import SearchBar from '../../components/SearchBox/SearchBox'; // Správný import
 import Pagination from '../../components/Pagination/Pagination';
 import Modal from '../../components/Modal/Modal';
 import NoteForm from '../../components/NoteForm/NoteForm';

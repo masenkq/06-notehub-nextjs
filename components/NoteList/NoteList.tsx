@@ -6,11 +6,11 @@ import { deleteNote } from '../../lib/api';
 import { Note } from '../../types/note';
 import css from './NoteList.module.css';
 
-interface Props {
+interface NoteListProps {
   notes: Note[];
 }
 
-export default function NoteList({ notes }: Props) {
+export default function NoteList({ notes }: NoteListProps) {
   const queryClient = useQueryClient();
 
   const deleteMutation = useMutation({

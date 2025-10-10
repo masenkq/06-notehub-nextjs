@@ -7,11 +7,11 @@ import css from './NoteDetail.module.css';
 
 export default function NoteDetail() {
   const { id } = useParams();
-  const noteId = parseInt(id as string); // Převede string na number
+  const noteId = id as string; // ID je již string, není třeba převádět
 
   const { data: note, isLoading, error } = useQuery({
     queryKey: ['note', noteId],
-    queryFn: () => fetchNoteById(noteId), // noteId je teď number
+    queryFn: () => fetchNoteById(noteId), // noteId je string
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
@@ -25,7 +25,9 @@ export default function NoteDetail() {
         </div>
         <p className={css.content}>{note.content}</p>
         <p className={css.tag}>Tag: {note.tag}</p>
-        <p className={css.date}>Created: {new Date(note.created_at).toLocaleDateString()}</p>
+        <p className={css.date}>
+          Created: {new Date(note.createdAt).toLocaleDateString()}
+        </p>
       </div>
     </div>
   );

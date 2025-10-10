@@ -4,11 +4,13 @@ import { fetchNoteById } from '../../../lib/api';
 import NoteDetailsClient from './NoteDetails.client';
 
 interface Props {
-  params: { id: string };
+  params: Promise<{ id: string }>;
 }
 
 export default async function NoteDetailsPage({ params }: Props) {
-  const noteId = parseInt(params.id);
+  const { id } = await params;
+  // ID je již string, není třeba převádět na number
+  const noteId = id;
 
   await queryClient.prefetchQuery({
     queryKey: ['note', noteId],

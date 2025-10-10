@@ -1,11 +1,11 @@
 import css from './SearchBox.module.css';
 
-interface SearchBarProps {
+interface SearchBoxProps {
   searchTerm: string;
   onSearchChange: (term: string) => void;
 }
 
-export default function SearchBar({ searchTerm, onSearchChange }: SearchBarProps) {
+export default function SearchBox({ searchTerm, onSearchChange }: SearchBoxProps) {
   return (
     <div className={css.searchContainer}>
       <input

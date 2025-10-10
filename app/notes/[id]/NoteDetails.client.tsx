@@ -5,17 +5,25 @@ import { useQuery } from '@tanstack/react-query';
 import { fetchNoteById } from '../../../lib/api';
 import css from './NoteDetails.module.css';
 
-interface Props {
-  noteId: number;
+interface NoteDetailsClientProps {
+  noteId: string; // Změněno z number na string
 }
 
-export default function NoteDetailsClient({ noteId }: Props) {
+export default function NoteDetailsClient({ noteId }: NoteDetailsClientProps) {
   const { id } = useParams();
-  const actualNoteId = noteId || parseInt(id as string);
+  
+  // ID z params je již string, není třeba převádět na number
+  const actualNoteId = (id as string) || noteId;
+
+  // Pokud ID není platné, zobraz chybu
+  if (!actualNoteId) {
+    return <p>Invalid note ID</p>;
+  }
 
   const { data: note, isLoading, error } = useQuery({
     queryKey: ['note', actualNoteId],
     queryFn: () => fetchNoteById(actualNoteId),
+    refetchOnMount: false,
   });
 
   if (isLoading) return <p>Loading, please wait...</p>;
@@ -28,7 +36,9 @@ export default function NoteDetailsClient({ noteId }: Props) {
           <h2>{note.title}</h2>
         </div>
         <p className={css.content}>{note.content}</p>
-        <p className={css.date}>{new Date(note.created_at).toLocaleDateString()}</p>
+        <p className={css.date}>
+          {new Date(note.createdAt).toLocaleDateString()}
+        </p>
       </div>
     </div>
   );

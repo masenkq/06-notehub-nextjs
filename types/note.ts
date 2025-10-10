@@ -1,22 +1,16 @@
 export type NoteTag = 'Todo' | 'Work' | 'Personal' | 'Meeting' | 'Shopping';
 
 export interface Note {
-  id: number;
+  id: string; // Změněno z number na string
   title: string;
   content: string;
   tag: NoteTag;
-  created_at: string;
+  createdAt: string; // Přejmenováno z created_at na createdAt
+  updatedAt: string; // Přidáno nové pole
 }
 
 export interface CreateNoteData {
   title: string;
   content: string;
   tag: NoteTag;
-}
-
-export interface FetchNotesResponse {
-  data: Note[];
-  total: number;
-  page: number;
-  perPage: number;
 }

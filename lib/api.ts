@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Note, CreateNoteData } from '../types/note'; // Odstraněn FetchNotesResponse
+import { Note, CreateNoteData } from '../types/note';
 
 const API_BASE_URL = 'https://notehub-public.goit.study/api';
 const token = process.env.NEXT_PUBLIC_NOTEHUB_TOKEN;
@@ -18,12 +18,13 @@ interface FetchNotesParams {
   search?: string;
 }
 
-// FetchNotesResponse definován přímo zde
+// FetchNotesResponse podle skutečné struktury API
 export interface FetchNotesResponse {
-  data: Note[];
-  total: number;
-  page: number;
-  perPage: number;
+  notes: Note[]; // API vrací 'notes' místo 'data'
+  totalPages: number; // API vrací 'totalPages' místo 'total'
+  // Přidáme page a perPage pro kompatibilitu s existujícím kódem
+  page?: number;
+  perPage?: number;
 }
 
 export const fetchNotes = async (page: number = 1, search: string = ''): Promise<FetchNotesResponse> => {

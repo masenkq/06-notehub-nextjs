@@ -30,7 +30,7 @@ export default function NotesClient() {
   const { data, isLoading, error } = useQuery({
     queryKey: ['notes', page, debouncedSearchTerm],
     queryFn: () => fetchNotes(page, debouncedSearchTerm),
-    placeholderData: (previousData) => previousData, // Pro plynulou paginaci
+    placeholderData: (previousData) => previousData,
   });
 
   if (error) {
@@ -53,7 +53,7 @@ export default function NotesClient() {
           onSearchChange={setSearchTerm} 
         />
         <Pagination
-          pageCount={data?.total ? Math.ceil(data.total / 12) : 0}
+          pageCount={data?.totalPages ? data.totalPages : 0} // Změněno z data.total na data.totalPages
           currentPage={page - 1}
           onPageChange={(selected) => setPage(selected.selected + 1)}
         />
@@ -65,8 +65,8 @@ export default function NotesClient() {
         </button>
       </header>
 
-      {data && data.data.length > 0 && (
-        <NoteList notes={data.data} />
+      {data && data.notes.length > 0 && ( // Změněno z data.data na data.notes
+        <NoteList notes={data.notes} />
       )}
 
       {isModalOpen && (

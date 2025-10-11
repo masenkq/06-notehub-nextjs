@@ -33,7 +33,7 @@ export default function NoteForm({ onClose, onSuccess, initialData }: NoteFormPr
     mutationFn: createNote,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['notes'] });
-      onSuccess();
+      onClose(); // Změněno z onSuccess() na onClose()
     },
   });
 

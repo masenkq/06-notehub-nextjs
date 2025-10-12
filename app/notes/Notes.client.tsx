@@ -27,11 +27,11 @@ export default function NotesClient() {
     debouncedSearch(searchTerm);
   }, [searchTerm, debouncedSearch]);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['notes', page, debouncedSearchTerm],
-    queryFn: () => fetchNotes(page, debouncedSearchTerm),
-    placeholderData: (previousData) => previousData,
-  });
+ const { data, isLoading, error } = useQuery({
+  queryKey: ['notes', page, debouncedSearchTerm],
+  queryFn: () => fetchNotes(debouncedSearchTerm, page), // Opraveno pořadí: searchText, page
+  placeholderData: (previousData) => previousData,
+});
 
   if (error) {
     throw error;
